@@ -5,9 +5,9 @@ import { useRouter } from "next/navigation";
 import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
 
 const MAX_FILE_SIZE = 1048576; // 1MB
-const fr = new FileReader();
 
 const Upload = () => {
+  const fr = useMemo(() => new FileReader(), []);
   const dispatch = useAppDispatch();
   const router = useRouter();
 
