@@ -4,24 +4,35 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --background-rgb: 255, 255, 255;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background-rgb: 0, 0, 0;
   }
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: rgb(var(--background-rgb));
+}
+
+@layer components {
+  .btn {
+    @apply bg-gradient-to-br from-sky-500 to-sky-700 text-white font-medium py-2 px-4 rounded cursor-pointer;
+  }
+
+  .btn-lg {
+    @apply btn min-w-28 min-h-12 text-2xl font-normal;
+  }
+
+  .hero-clip {
+    /* fixes an odd pixel gap in UI*/
+    position: relative;
+    left: -1px;
+
+    clip-path: polygon(0% 0%, 100% 0%, 0% 100%, 0% 100%);
+  }
 }
