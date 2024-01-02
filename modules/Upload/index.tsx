@@ -1,13 +1,16 @@
 "use client";
-import { useAppDispatch, useAppSelector, useAppStore } from "@/redux/hooks";
+import { useAppDispatch } from "@/redux/hooks";
 import { addData } from "@/redux/slices/amazonData";
 import { useRouter } from "next/navigation";
-import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
+import React, { ChangeEvent, useMemo } from "react";
 
 const MAX_FILE_SIZE = 1048576; // 1MB
 
 const Upload = () => {
-  const fr = useMemo(() => new FileReader(), []);
+  const fr = useMemo(
+    () => (typeof window !== "undefined" ? new FileReader() : null),
+    []
+  );
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -16,13 +19,15 @@ const Upload = () => {
     if (files == null || files.length <= 0) return;
     const csvFile = files[0];
     if (csvFile.size > MAX_FILE_SIZE) return;
-    fr.onload = (e) => {
-      if (e.target == null || typeof e.target.result !== "string") return;
-      const csvTextContent = e.target.result;
-      dispatch(addData(csvTextContent));
-      router.push("spending/analysis");
-    };
-    fr.readAsText(csvFile);
+    if (fr) {
+      fr.onload = (e) => {
+        if (e.target == null || typeof e.target.result !== "string") return;
+        const csvTextContent = e.target.result;
+        dispatch(addData(csvTextContent));
+        router.push("spending/analysis");
+      };
+      fr.readAsText(csvFile);
+    }
   };
 
   return (
