@@ -3,7 +3,6 @@ import Accordion from "@/components/accordion";
 import DataPrivacy from "@/modules/DataPrivacy";
 import HowTo from "@/modules/HowTo";
 import Upload from "@/modules/Upload";
-import Link from "next/link";
 import React, { useState } from "react";
 
 const Spending = () => {

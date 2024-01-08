@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { parse } from "csv-parse/sync";
-import dayjs from "dayjs";
 
 type AmazonDataState = {
   data: Array<[Date, number]>;
@@ -27,7 +26,7 @@ const processAmazonCSV = (csvFileContent: string): Array<[Date, number]> => {
         return null;
       }
       if (record[orderDateIndex] === "Not Available") return null;
-      return [record[orderDateIndex], parseFloat(record[totalOwedIndex])];
+      return [record[orderDateIndex], +record[totalOwedIndex]];
     })
     .filter((e: Array<string> | null) => e);
 

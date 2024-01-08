@@ -1,3 +1,4 @@
+"use client";
 import React, { PropsWithChildren } from "react";
 
 const SpendingLayout: React.FC<PropsWithChildren> = ({ children }) => {

@@ -1,6 +1,6 @@
 "use client";
 import { useAppSelector } from "@/redux/hooks";
-import React, { Fragment, useMemo } from "react";
+import React, { Fragment, useEffect, useMemo } from "react";
 import {
   MONTH_ARR,
   formatAsDollar,
@@ -9,12 +9,23 @@ import {
   getTotalSpendingAllTime,
   getTotalSpendingByYear,
 } from "./utils";
+import { useRouter } from "next/navigation";
 
 const SpendingAnalysis = () => {
   const amazonData = useAppSelector((state) => state.amazonData.data);
   const spendingByYearByMonth = getSpendingByYearByMonth(amazonData);
   const spendingByYear = getTotalSpendingByYear(amazonData);
   const totalSpending = getTotalSpendingAllTime(amazonData);
+
+  const isDataEmpty = amazonData.length === 0;
+  const router = useRouter();
+  console.log(amazonData);
+
+  useEffect(() => {
+    if (isDataEmpty) {
+      router.push("/spending");
+    }
+  }, [isDataEmpty, router]);
 
   return (
     <section>
